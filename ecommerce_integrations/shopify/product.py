@@ -342,9 +342,9 @@ def upload_erpnext_item(doc, method=None):
 	if frappe.flags.in_import:
 		return
 
-	if doc.has_variants or doc.variant_of:
-		msgprint(_("Item with variants or template items can not be uploaded to Shopify."))
-		return
+	# if doc.has_variants or doc.variant_of:
+	# 	msgprint(_("Item with variants or template items can not be uploaded to Shopify."))
+	# 	return
 
 	product_id = frappe.db.get_value(
 		"Ecommerce Item",
