@@ -45,3 +45,4 @@ After installation follow user documentation for each integration to set it up.
 #### License
 
 GNU GPL v3.0
+# ecommerce_integration
