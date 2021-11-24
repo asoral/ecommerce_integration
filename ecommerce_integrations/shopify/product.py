@@ -353,7 +353,7 @@ def upload_erpnext_item(doc, method=None):
 	)
 	is_new_product = not bool(product_id)
 
-	if is_new_product & doc.variant_of!=1:
+	if is_new_product and not doc.variant_of:
 
 		product = Product()
 		product.published = False
