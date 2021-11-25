@@ -345,49 +345,49 @@ def upload_erpnext_item(doc, method=None):
 	# if doc.has_variants or doc.variant_of:
 	# 	msgprint(_("Item with variants or template items can not be uploaded to Shopify."))
 	# 	return
-	if not doc.variant_of:
-		product_id = frappe.db.get_value(
-			"Ecommerce Item",
-			{"erpnext_item_code": item.name, "integration": MODULE_NAME},
-			"integration_item_code",
-		)
-		is_new_product = not bool(product_id)
 
-		if is_new_product:
+	product_id = frappe.db.get_value(
+		"Ecommerce Item",
+		{"erpnext_item_code": item.name, "integration": MODULE_NAME},
+		"integration_item_code",
+	)
+	is_new_product = not bool(product_id)
 
-			product = Product()
-			product.published = False
-			product.status = "draft"
+	if is_new_product:
 
+		product = Product()
+		product.published = False
+		product.status = "draft"
+
+		map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
+		is_successful = product.save()
+
+		if is_successful:
+			update_default_variant_properties(
+				product, sku=item.item_code, price=item.standard_rate, is_stock_item=item.is_stock_item,
+			)
+			product.save()  # push variant
+
+			ecom_item = frappe.get_doc(
+				{
+					"doctype": "Ecommerce Item",
+					"erpnext_item_code": item.name,
+					"integration": MODULE_NAME,
+					"integration_item_code": str(product.id),
+					"variant_id": str(product.variants[0].id),
+					"sku": str(product.variants[0].sku),
+				}
+			)
+			ecom_item.insert()
+
+		write_upload_log(status=is_successful, product=product, item=item)
+	elif setting.update_shopify_item_on_update:
+		product = Product.find(product_id)
+		if product:
 			map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
+			update_default_variant_properties(product, is_stock_item=item.is_stock_item)
 			is_successful = product.save()
-
-			if is_successful:
-				update_default_variant_properties(
-					product, sku=item.item_code, price=item.standard_rate, is_stock_item=item.is_stock_item,
-				)
-				product.save()  # push variant
-
-				ecom_item = frappe.get_doc(
-					{
-						"doctype": "Ecommerce Item",
-						"erpnext_item_code": item.name,
-						"integration": MODULE_NAME,
-						"integration_item_code": str(product.id),
-						"variant_id": str(product.variants[0].id),
-						"sku": str(product.variants[0].sku),
-					}
-				)
-				ecom_item.insert()
-
-			write_upload_log(status=is_successful, product=product, item=item)
-		elif setting.update_shopify_item_on_update:
-			product = Product.find(product_id)
-			if product:
-				map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
-				update_default_variant_properties(product, is_stock_item=item.is_stock_item)
-				is_successful = product.save()
-				write_upload_log(status=is_successful, product=product, item=item, action="Updated")
+			write_upload_log(status=is_successful, product=product, item=item, action="Updated")
 
 
 def map_erpnext_item_to_shopify(shopify_product: Product, erpnext_item):
