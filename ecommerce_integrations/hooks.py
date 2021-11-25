@@ -101,7 +101,6 @@ doc_events = {
 		"validate": [
 			"ecommerce_integrations.utils.taxation.validate_tax_template",
 			"ecommerce_integrations.unicommerce.product.validate_item",
-			"ecommerce_integrations.ecommerce_integrations.shopify.product._create_item_variants"
 		],
 	},
 	"Sales Order": {
