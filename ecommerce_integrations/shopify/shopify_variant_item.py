@@ -27,23 +27,25 @@ def update_variant(item_code):
 			"integration_item_code",
 		)
     key=frappe.db.get_single_value('Shopify Setting', 'api_key')
-    # password=frappe.db.get_single_value('Shopify Setting', 'password')
     docSettings = frappe.get_single("Shopify Setting")
     password = docSettings.get_password('password')
 
     url = "https://"+key+":"+password+"@farmley-dry-fruit.myshopify.com/admin/api/2021-10/products/"+product_id+"/variants.json"
+    doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
+    for i in doc:
+        sdoc=frappe.get_doc("Item",i.name)
+        for i in sdoc.attributes:
+            if i.attribute=="Size":
+                payload = json.dumps({
+                "variant": {
+                    "option1":i.attribute_value
+                }
+                })
+                headers = {
+                'Content-Type': 'application/json'
+                }
 
-    payload = json.dumps({
-    "variant": {
-        "option1": "Yellow",
-        "price": "100"
-    }
-    })
-    headers = {
-    'Content-Type': 'application/json'
-    }
+                response = requests.request("POST", url, headers=headers, data=payload)
 
-    response = requests.request("POST", url, headers=headers, data=payload)
-
-    print(response.text)
+                print(response.text)
 
