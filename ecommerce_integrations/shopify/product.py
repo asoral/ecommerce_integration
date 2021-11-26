@@ -282,7 +282,7 @@ def _match_sku_and_link_item(
 					"integration": MODULE_NAME,
 					"erpnext_item_code": item_name,
 					"integration_item_code": product_id,
-					"has_variants": 0,
+					"has_variants": 1,
 					"variant_id": cstr(variant_id),
 					"sku": sku,
 				}
@@ -376,6 +376,7 @@ def upload_erpnext_item(doc, method=None):
 						"integration_item_code": str(product.id),
 						"variant_id": str(product.variants[0].id),
 						"sku": str(product.variants[0].sku),
+						"selected_variant":1
 					}
 				)
 				ecom_item.insert()
