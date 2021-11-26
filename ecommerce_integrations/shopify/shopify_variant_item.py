@@ -38,6 +38,7 @@ def update_variant(item_code):
             if i.attribute=="Size":
                 payload = json.dumps({
                 "variant": {
+                    "name":"Size",
                     "option1":i.attribute_value
                 }
                 })
