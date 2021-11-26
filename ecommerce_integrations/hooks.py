@@ -101,6 +101,7 @@ doc_events = {
 		"validate": [
 			"ecommerce_integrations.utils.taxation.validate_tax_template",
 			"ecommerce_integrations.unicommerce.product.validate_item",
+			"ecommerce_integrations.ecommerce_integrations.product._match_sku_and_link_item"
 		],
 	},
 	"Sales Order": {
