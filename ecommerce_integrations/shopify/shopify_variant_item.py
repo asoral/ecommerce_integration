@@ -56,7 +56,7 @@ def update_variant(item_code):
                 'Content-Type': 'application/json'
                 }
 
-                response = requests.request("PUT", url, headers=headers, data=payload)
+                response = requests.request("POST", url, headers=headers, data=payload)
 
                 print(response.text)
 
