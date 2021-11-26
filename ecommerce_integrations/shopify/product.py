@@ -150,6 +150,7 @@ class ShopifyProduct:
 				variant_of=variant_of,
 				has_variants=has_variant,
 			)
+	# def sync_variant(self):
 
 	def _create_item_variants(self, product_dict, warehouse, attributes):
 		template_item = ecommerce_item.get_erpnext_item(
@@ -169,6 +170,7 @@ class ShopifyProduct:
 					"item_price": variant.get("price"),
 					"weight_unit": variant.get("weight_unit"),
 					"weight": variant.get("weight"),
+					
 				}
 
 				for i, variant_attr in enumerate(SHOPIFY_VARIANTS_ATTR_LIST):
