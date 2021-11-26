@@ -37,18 +37,15 @@ def update_variant(item_code):
         for i in sdoc.attributes:
             if i.attribute=="Size":
                 payload = json.dumps({
-                {
                 "options":{
                     "name":"Size",
                     "position":1,
-                    "values":[
-                        i.attribute_value
-                    ]
+                    "values":i.attribute_value
+                    
                 },
                 "variant": {
                     "option1":i.attribute_value,
                     "sku":sdoc.name
-                }
                 }
                 })
                 headers = {
