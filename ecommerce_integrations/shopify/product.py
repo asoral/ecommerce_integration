@@ -138,7 +138,7 @@ class ShopifyProduct:
 		variant_id = product_dict.get("variant_id", "")  # shopify variant_id if has variants
 		sku = item_dict["sku"]
 
-		if not _match_sku_and_link_item(
+		if _match_sku_and_link_item(
 			item_dict, integration_item_code, variant_id, variant_of=variant_of, has_variant=has_variant
 		):
 			ecommerce_item.create_ecommerce_item(
