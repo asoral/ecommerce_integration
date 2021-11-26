@@ -138,7 +138,7 @@ class ShopifyProduct:
 		variant_id = product_dict.get("variant_id", "")  # shopify variant_id if has variants
 		sku = item_dict["sku"]
 
-		if _match_sku_and_link_item(
+		if not _match_sku_and_link_item(
 			item_dict, integration_item_code, variant_id, variant_of=variant_of, has_variant=has_variant
 		):
 			ecommerce_item.create_ecommerce_item(
@@ -345,7 +345,7 @@ def upload_erpnext_item(doc, method=None):
 	# if doc.has_variants or doc.variant_of:
 	# 	msgprint(_("Item with variants or template items can not be uploaded to Shopify."))
 	# 	return
-	if not doc.has_variants:
+	if not doc.variant_of:
 		product_id = frappe.db.get_value(
 			"Ecommerce Item",
 			{"erpnext_item_code": item.name, "integration": MODULE_NAME},
