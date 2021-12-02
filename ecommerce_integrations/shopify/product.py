@@ -395,14 +395,13 @@ def upload_erpnext_item(doc, method=None):
 
 
 @frappe.whitelist()
-def update_item(doc,method=None):
-	item = doc
+def update_item(doc):
+	item = frappe.get_doc("Item",doc)
 	product_id = frappe.db.get_value(
 			"Ecommerce Item",
 			{"erpnext_item_code": item.name, "integration": MODULE_NAME},
 			"integration_item_code",
 		)
-	is_new_product = not bool(product_id)
 	product = Product.find(product_id)
 	if product:
 		map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
