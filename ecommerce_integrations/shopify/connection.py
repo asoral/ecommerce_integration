@@ -30,9 +30,9 @@ def temp_shopify_session(func):
 		setting = frappe.get_doc(SETTING_DOCTYPE)
 		if setting.is_enabled():
 			auth_details = (setting.shopify_url, API_VERSION, setting.get_password("password"))
-			return None
-			# with Session.temp(*auth_details):
-			# 	return func(*args, **kwargs)
+			print("&&&&&&&&&&&&&&&&&&",Session.temp(*auth_details))
+			with Session.temp(*auth_details):
+				return func(*args, **kwargs)
 
 	return wrapper
 
