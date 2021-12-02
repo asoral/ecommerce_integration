@@ -399,7 +399,7 @@ def upload_erpnext_item(doc, method=None):
 
 @frappe.whitelist()
 @temp_shopify_session
-def update_item_shopify(doc,method=None):
+def update_item_shopify(doc):
 	item = frappe.get_doc("Item",doc)
 	product_id = frappe.db.get_value(
 			"Ecommerce Item",
