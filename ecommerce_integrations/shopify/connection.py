@@ -4,6 +4,8 @@ import hmac
 import json
 from typing import List
 
+from psycopg2.extensions import NoneAdapter
+
 import frappe
 from frappe import _
 from shopify.resources import Webhook
@@ -33,7 +35,7 @@ def temp_shopify_session(func):
 			print("&&&&&&&&888888888",auth_details)
 			with Session.temp(*auth_details):
 				print("&&&&&&&&&&&&&&",func(*args, **kwargs))
-				return func(*args, **kwargs)
+				return None
 	print("$$$$$$$$$$$$$$$$$",wrapper)
 	return wrapper
 
