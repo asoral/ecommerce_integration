@@ -39,7 +39,7 @@ frappe.ui.form.on("Item", {
 		if(!frm.doc.has_variants){
             frm.add_custom_button(__("Update Item Shopify"), function() {
                 frappe.call({
-                    method: 'ecommerce_integrations.shopify.product.update_item',
+                    method: 'ecommerce_integrations.shopify.product.update_item_shopify',
                     args: {
                         "doc" : frm.doc.item_code,
                     },
