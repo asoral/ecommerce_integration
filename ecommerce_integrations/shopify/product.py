@@ -402,6 +402,7 @@ def update_item(doc):
 			{"erpnext_item_code": doc, "integration": MODULE_NAME},
 			"integration_item_code",
 		)
+	print("&&&&&&&&&&&&&&&&&&&&&&",product_id)
 	product = Product.find(product_id)
 	if product:
 		map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
