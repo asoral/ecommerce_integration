@@ -407,7 +407,7 @@ def update_item_shopify(doc,method=None):
 			"integration_item_code",
 		)
 	print("&&&&&&&&&&&&&&&&&&&&&&",product_id)
-	product = Product.find(str(product_id))
+	product = Product.find(product_id)
 	if product:
 		map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
 		update_default_variant_properties(product, is_stock_item=item.is_stock_item)
