@@ -34,7 +34,7 @@ def temp_shopify_session(func):
 			with Session.temp(*auth_details):
 				print("&&&&&&&&&&&&&&",func(*args, **kwargs))
 				return func(*args, **kwargs)
-
+	print("$$$$$$$$$$$$$$$$$",wrapper)
 	return wrapper
 
 
