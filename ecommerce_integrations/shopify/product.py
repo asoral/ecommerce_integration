@@ -399,7 +399,7 @@ def update_item(doc):
 	item = frappe.get_doc("Item",doc)
 	product_id = frappe.db.get_value(
 			"Ecommerce Item",
-			{"erpnext_item_code": item.name, "integration": MODULE_NAME},
+			{"erpnext_item_code": doc, "integration": MODULE_NAME},
 			"integration_item_code",
 		)
 	product = Product.find(product_id)
