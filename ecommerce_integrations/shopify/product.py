@@ -386,6 +386,7 @@ def upload_erpnext_item(doc, method=None):
 			write_upload_log(status=is_successful, product=product, item=item)
 		elif setting.update_shopify_item_on_update:
 			product = Product.find(product_id)
+			print("^^^^^^^^^^^^^",product)
 			if product:
 				map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
 				update_default_variant_properties(product, is_stock_item=item.is_stock_item)
