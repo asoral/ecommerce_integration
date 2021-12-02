@@ -4,8 +4,6 @@ import hmac
 import json
 from typing import List
 
-from psycopg2.extensions import NoneAdapter
-
 import frappe
 from frappe import _
 from shopify.resources import Webhook
@@ -32,11 +30,10 @@ def temp_shopify_session(func):
 		setting = frappe.get_doc(SETTING_DOCTYPE)
 		if setting.is_enabled():
 			auth_details = (setting.shopify_url, API_VERSION, setting.get_password("password"))
-			print("&&&&&&&&888888888",auth_details)
-			with Session.temp(*auth_details):
-				print("&&&&&&&&&&&&&&",func(*args, **kwargs))
-				return None
-	print("$$$$$$$$$$$$$$$$$",wrapper)
+
+			# with Session.temp(*auth_details):
+			# 	return func(*args, **kwargs)
+
 	return wrapper
 
 
