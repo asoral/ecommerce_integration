@@ -32,6 +32,7 @@ def temp_shopify_session(func):
 			auth_details = (setting.shopify_url, API_VERSION, setting.get_password("password"))
 
 			with Session.temp(*auth_details):
+				print("&&&&&&&&&&&&&&",func(*args, **kwargs))
 				return func(*args, **kwargs)
 
 	return wrapper
