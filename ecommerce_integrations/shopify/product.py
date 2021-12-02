@@ -353,6 +353,7 @@ def upload_erpnext_item(doc, method=None):
 			{"erpnext_item_code": item.name, "integration": MODULE_NAME},
 			"integration_item_code",
 		)
+		print("^^^^^^^^^^^^^&&",product_id)
 		is_new_product = not bool(product_id)
 
 		if is_new_product:
@@ -396,6 +397,7 @@ def upload_erpnext_item(doc, method=None):
 
 
 @frappe.whitelist()
+@temp_shopify_session
 def update_item(doc):
 	item = frappe.get_doc("Item",doc)
 	product_id = frappe.db.get_value(
