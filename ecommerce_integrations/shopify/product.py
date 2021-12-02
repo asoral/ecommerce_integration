@@ -393,6 +393,23 @@ def upload_erpnext_item(doc, method=None):
 				write_upload_log(status=is_successful, product=product, item=item, action="Updated")
 
 
+
+@frappe.whitelist()
+def update_item(doc,method=None):
+	item = doc
+	product_id = frappe.db.get_value(
+			"Ecommerce Item",
+			{"erpnext_item_code": item.name, "integration": MODULE_NAME},
+			"integration_item_code",
+		)
+	is_new_product = not bool(product_id)
+	product = Product.find(product_id)
+	if product:
+		map_erpnext_item_to_shopify(shopify_product=product, erpnext_item=item)
+		update_default_variant_properties(product, is_stock_item=item.is_stock_item)
+		is_successful = product.save()
+		write_upload_log(status=is_successful, product=product, item=item, action="Updated")
+
 def map_erpnext_item_to_shopify(shopify_product: Product, erpnext_item):
 	"""Map erpnext fields to shopify, called both when updating and creating new products."""
 
