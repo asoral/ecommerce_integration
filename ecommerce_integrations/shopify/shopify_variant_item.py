@@ -44,12 +44,13 @@ def update_variant(item_code):
     payload1= json.dumps({ 
         {
             "product": {
-                "options":[
-                {
-                    "name":"Size","position":1,"values":"abc"
-                        
-                }
-            ]
+                "options":
+                    {
+                        "name":"Size",
+                        "position":1,
+                        "values":"abc"
+                            
+                    }   
             }
         }
     })
