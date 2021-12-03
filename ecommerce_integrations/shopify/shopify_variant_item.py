@@ -46,7 +46,7 @@ def update_variant(item_code):
             "product": {
                 "options":[
                 {
-                    "name":"Size","position":1,"values":alt
+                    "name":"Size","position":1,"values":[]
                         
                 }
             ]
@@ -58,7 +58,7 @@ def update_variant(item_code):
         }
 
     response = requests.request("PUT", url1, headers=headers1, data=payload1)
-    
+
     doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
     for i in doc:
         sdoc=frappe.get_doc("Item",i.name)
