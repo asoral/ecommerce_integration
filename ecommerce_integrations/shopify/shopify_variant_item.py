@@ -36,15 +36,15 @@ def update_variant(item_code):
     url = "https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
     # url="https://{{api_key}}:{{api_password}}@{{store_name}}.myshopify.com/admin/api/{{api_version}}/variants/{{variant_id}}.json"
     payload1= json.dumps({ 
-        {
-            "product": {
-                "options":[
-                {
-                    "name":"Size","position":1,"values":["Rose","Dark Red"]
-                }
-            ]
+        
+        "product": {
+            "options":[
+            {
+                "name":"Size","position":1,"values":["Rose","Dark Red"]
             }
+            ]
         }
+        
     })
     print("&&&&&&&&&&&&&&&&&",payload1)
     headers1 = {
