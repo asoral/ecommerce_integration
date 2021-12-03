@@ -42,17 +42,16 @@ def update_variant(item_code):
         for i in sdoc.attributes:
             alt.append(i.attribute_value)
     payload1= json.dumps({ 
-        {
-            "product": {
-                "options":
-                    {
-                        "name":"Size",
-                        "position":1,
-                        "values":["abc"]
-                            
-                    }   
-            }
+        
+        "product": {
+            "options":
+                {
+                "name":"Size",
+                "position":1,
+                "values":["abc"]           
+            }   
         }
+        
     })
     headers1 = {
             'Content-Type': 'application/json'
