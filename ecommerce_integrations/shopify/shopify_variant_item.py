@@ -48,7 +48,7 @@ def update_variant(item_code):
                     {
                         "name":"Size",
                         "position":1,
-                        "values":"abc"
+                        "values":["abc"]
                             
                     }   
             }
