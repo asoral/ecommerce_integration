@@ -46,7 +46,7 @@ def update_variant(item_code):
             "product": {
                 "options":[
                 {
-                    "name":"Size","position":1,"values":["abc"]
+                    "name":"Size","position":1,"values":"abc"
                         
                 }
             ]
