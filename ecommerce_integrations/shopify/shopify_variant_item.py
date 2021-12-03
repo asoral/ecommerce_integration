@@ -46,13 +46,13 @@ def update_variant(item_code):
         }
         
     })
-    print("&&&&&&&&&&&&&&&&&",payload1)
+   
     headers1 = {
         'Content-Type': 'application/json'
     }
 
     response = requests.request("PUT", url1, headers=headers1, data=payload1)
-    print("**********677777",response)
+   
     doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
     for i in doc:
         sdoc=frappe.get_doc("Item",i.name)
