@@ -31,7 +31,7 @@ def update_variant(item_code):
     docSettings = frappe.get_single("Shopify Setting")
     password = docSettings.get_password('password')
 
-    url1="https://"+key+":"+password+"@farmley-dry-fruit.myshopify.com/admin/api/2021-10/products/"+product_id+".json"
+    url1="https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+".json"
 
     url = "https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
     # url="https://{{api_key}}:{{api_password}}@{{store_name}}.myshopify.com/admin/api/{{api_version}}/variants/{{variant_id}}.json"
@@ -48,8 +48,8 @@ def update_variant(item_code):
     })
     print("&&&&&&&&&&&&&&&&&",payload1)
     headers1 = {
-            'Content-Type': 'application/json'
-        }
+        'Content-Type': 'application/json'
+    }
 
     response = requests.request("PUT", url1, headers=headers1, data=payload1)
     print("**********677777",response)
