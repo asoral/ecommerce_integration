@@ -22,7 +22,8 @@ def temp_shopify_session(func):
 	"""Any function that needs to access shopify api needs this decorator. The decorator starts a temp session that's destroyed when function returns."""
 
 	def wrapper(*args, **kwargs):
-
+		print("$$$$$$$$$$$$$$$$$$$",args)
+		print("$==+++++++++++=======",kwargs)
 		# no auth in testing
 		if frappe.flags.in_test:
 			return func(*args, **kwargs)
