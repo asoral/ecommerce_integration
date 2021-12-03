@@ -36,26 +36,29 @@ def update_variant(item_code):
     url = "https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
     # url="https://{{api_key}}:{{api_password}}@{{store_name}}.myshopify.com/admin/api/{{api_version}}/variants/{{variant_id}}.json"
     doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
+    alt=[]
     for i in doc:
         sdoc=frappe.get_doc("Item",i.name)
         for i in sdoc.attributes:
-            payload1= json.dumps({ 
+            alt.append(i.attribute_value)
+    payload1= json.dumps({ 
+        {
+            "product": {
+                "options":[
                 {
-                    "product": {
-                        "options":[
-                        {
-                            "name":"Size","position":1,"values":[ i.attribute_value]
-                                
-                        }
-                        ]
-                    }
+                    "name":"Size","position":1,"values":alt
+                        
                 }
-                    })
-            headers1 = {
-                        'Content-Type': 'application/json'
-                }
+            ]
+            }
+        }
+    })
+    headers1 = {
+            'Content-Type': 'application/json'
+        }
 
-            response = requests.request("PUT", url1, headers=headers1, data=payload1)
+    response = requests.request("PUT", url1, headers=headers1, data=payload1)
+    
     doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
     for i in doc:
         sdoc=frappe.get_doc("Item",i.name)
