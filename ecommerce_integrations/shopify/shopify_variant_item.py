@@ -31,23 +31,37 @@ def update_variant(item_code):
     docSettings = frappe.get_single("Shopify Setting")
     password = docSettings.get_password('password')
 
-    # url="https://"+key+":"+password+"@farmley-dry-fruit.myshopify.com/admin/api/2021-10/products/"+product_id+".json"
+    url1="https://"+key+":"+password+"@farmley-dry-fruit.myshopify.com/admin/api/2021-10/products/"+product_id+".json"
 
     url = "https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
     # url="https://{{api_key}}:{{api_password}}@{{store_name}}.myshopify.com/admin/api/{{api_version}}/variants/{{variant_id}}.json"
+    doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
+    for i in doc:
+        sdoc=frappe.get_doc("Item",i.name)
+        for i in sdoc.attributes:
+            payload1= json.dumps({ 
+                {
+                    "product": {
+                        "options":[
+                        {
+                            "name":"Size","position":1,"values":[ i.attribute_value]
+                                
+                        }
+                        ]
+                    }
+                }
+                    })
+            headers1 = {
+                        'Content-Type': 'application/json'
+                }
 
+            response = requests.request("PUT", url1, headers=headers1, data=payload1)
     doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
     for i in doc:
         sdoc=frappe.get_doc("Item",i.name)
         for i in sdoc.attributes:
             if i.attribute=="Size":
                 payload = json.dumps({
-                # "options":{
-                #     "name":"Size",
-                #     "position":1,
-                #     "values":i.attribute_value
-                    
-                # }
                 "variant": {
                     "option1":i.attribute_value,
                     "sku":sdoc.name
@@ -59,43 +73,5 @@ def update_variant(item_code):
 
                 response = requests.request("POST", url, headers=headers, data=payload)
 
-                print(response.text)
+                
 
-@frappe.whitelist()
-def update_product(item_code):
-    product_id = frappe.db.get_value(
-			"Ecommerce Item",
-			{"erpnext_item_code": item_code, "integration": MODULE_NAME},
-			"integration_item_code",
-		)
-    key=frappe.db.get_single_value('Shopify Setting', 'api_key')
-    docSettings = frappe.get_single("Shopify Setting")
-    password = docSettings.get_password('password')
-
-    # url="https://"+key+":"+password+"@farmley-dry-fruit.myshopify.com/admin/api/2021-10/products/"+product_id+".json"
-
-    url = "https://"+key+":"+password+"@farmley-dry-fruit.myshopify.com/admin/api/2021-10/products/"+product_id+"/variants.json"
-    # url="https://{{api_key}}:{{api_password}}@{{store_name}}.myshopify.com/admin/api/{{api_version}}/variants/{{variant_id}}.json"
-
-    doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
-    for i in doc:
-        sdoc=frappe.get_doc("Item",i.name)
-        for i in sdoc.attributes:
-            if i.attribute=="Size":
-                payload = json.dumps({
-                # "options":{
-                #     "name":"Size",
-                #     "position":1,
-                #     "values":i.attribute_value
-                    
-                # }
-                "variant": {
-                    "option1":i.attribute_value,
-                    "sku":sdoc.name
-                }
-                })
-                headers = {
-                'Content-Type': 'application/json'
-                }
-
-                response = requests.request("POST", url, headers=headers, data=payload)
