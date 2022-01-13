@@ -112,8 +112,8 @@ def process_request(data, event):
 	print("#########################",data)
 	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",EVENT_MAPPER[event])
 	# enqueue backround job
-	prepare_delivery_note(data,log.name)
-	
+	if event=="orders/fulfilled":
+		prepare_delivery_note(data,log.name)
 	frappe.enqueue(
 		method=EVENT_MAPPER[event],
 		queue="short",
