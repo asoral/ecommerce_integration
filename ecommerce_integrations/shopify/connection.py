@@ -112,8 +112,6 @@ def process_request(data, event):
 	print("#########################",data)
 	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",EVENT_MAPPER[event])
 	# enqueue backround job
-	if event=="orders/fulfilled":
-		prepare_delivery_note(data,log.name)
 	frappe.enqueue(
 		method=EVENT_MAPPER[event],
 		queue="short",
@@ -121,6 +119,8 @@ def process_request(data, event):
 		is_async=True,
 		**{"payload": data, "request_id": log.name},
 	)
+	if event=="orders/fulfilled":
+		prepare_delivery_note(payload=data,request_id=log.name)
 
 
 def _validate_request(req, hmac_header):
