@@ -16,8 +16,6 @@ from ecommerce_integrations.shopify.constants import (
 	WEBHOOK_EVENTS,
 )
 from ecommerce_integrations.shopify.utils import create_shopify_log
-from ecommerce_integrations.shopify.fulfillment import prepare_delivery_note
-
 
 
 def temp_shopify_session(func):
@@ -87,7 +85,7 @@ def get_callback_url() -> str:
 	If developer_mode is enabled and localtunnel_url is set in site config then callback url is set to localtunnel_url.
 	"""
 	url = get_current_domain_name()
-	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",f"https://{url}/api/method/ecommerce_integrations.shopify.connection.store_request_data")
+
 	return f"https://{url}/api/method/ecommerce_integrations.shopify.connection.store_request_data"
 
 
@@ -108,9 +106,7 @@ def process_request(data, event):
 
 	# create log
 	log = create_shopify_log(method=EVENT_MAPPER[event], request_data=data)
-	print("$$$$$$$$$$$$$$$$",event)
-	print("#########################",data)
-	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",EVENT_MAPPER[event])
+
 	# enqueue backround job
 	frappe.enqueue(
 		method=EVENT_MAPPER[event],
@@ -119,8 +115,6 @@ def process_request(data, event):
 		is_async=True,
 		**{"payload": data, "request_id": log.name},
 	)
-	if event=="orders/fulfilled":
-		prepare_delivery_note(payload=data,request_id=log.name)
 
 
 def _validate_request(req, hmac_header):
