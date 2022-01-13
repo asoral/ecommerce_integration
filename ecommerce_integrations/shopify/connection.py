@@ -85,7 +85,7 @@ def get_callback_url() -> str:
 	If developer_mode is enabled and localtunnel_url is set in site config then callback url is set to localtunnel_url.
 	"""
 	url = get_current_domain_name()
-
+	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",f"https://{url}/api/method/ecommerce_integrations.shopify.connection.store_request_data")
 	return f"https://{url}/api/method/ecommerce_integrations.shopify.connection.store_request_data"
 
 

@@ -6,7 +6,7 @@ MODULE_NAME = "shopify"
 SETTING_DOCTYPE = "Shopify Setting"
 OLD_SETTINGS_DOCTYPE = "Shopify Settings"
 
-API_VERSION = "2021-04"
+API_VERSION = "2021-10"
 
 WEBHOOK_EVENTS = [
 	"orders/create",
