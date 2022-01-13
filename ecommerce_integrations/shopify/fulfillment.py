@@ -23,7 +23,7 @@ def prepare_delivery_note(payload, request_id=None):
 	sales_order = get_sales_order(cstr(order["id"]))
 	if sales_order:
 		create_delivery_note(order, setting, sales_order)
-	create_shopify_log(status="Success")
+		# create_shopify_log(status="Success")
 	# except Exception as e:
 		# create_shopify_log(status="Error", exception=e, rollback=True)
 
