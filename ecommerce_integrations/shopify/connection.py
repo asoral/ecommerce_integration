@@ -105,22 +105,18 @@ def store_request_data() -> None:
 
 def process_request(data, event):
 	print("#######################",data,event)
-	if event!="orders/fulfilled":
 	# create log
-		log = create_shopify_log(method=EVENT_MAPPER[event], request_data=data)
+	log = create_shopify_log(method=EVENT_MAPPER[event], request_data=data)
 
-		# enqueue backround job
-		frappe.enqueue(
-			method=EVENT_MAPPER[event],
-			queue="short",
-			timeout=300,
-			is_async=True,
-			**{"payload": data, "request_id": log.name},
-		)
-	else:
-		log = create_shopify_log(method=EVENT_MAPPER[event], request_data=data)
-		prepare_delivery_note(payload=data,request_id=log.name)
-
+	# enqueue backround job
+	frappe.enqueue(
+		method=EVENT_MAPPER[event],
+		queue="long",
+		timeout=2000,
+		is_async=True,
+		**{"payload": data, "request_id": log.name},
+	)
+	
 def _validate_request(req, hmac_header):
 	settings = frappe.get_doc(SETTING_DOCTYPE)
 	secret_key = settings.shared_secret
