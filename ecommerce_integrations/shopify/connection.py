@@ -106,7 +106,9 @@ def process_request(data, event):
 
 	# create log
 	log = create_shopify_log(method=EVENT_MAPPER[event], request_data=data)
-
+	print("$$$$$$$$$$$$$$$$",event)
+	print("#########################",data)
+	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",EVENT_MAPPER[event])
 	# enqueue backround job
 	frappe.enqueue(
 		method=EVENT_MAPPER[event],
