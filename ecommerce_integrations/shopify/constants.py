@@ -11,7 +11,7 @@ API_VERSION = "2021-10"
 WEBHOOK_EVENTS = [
 	"orders/create",
 	"orders/paid",
-	# "orders/fulfilled",
+	"orders/fulfilled",
 	"orders/cancelled",
 ]
 
