@@ -13,7 +13,6 @@ from ecommerce_integrations.shopify.utils import create_shopify_log
 
 
 def prepare_delivery_note(payload, request_id=None):
-	print("***********************************8")
 	frappe.set_user("Administrator")
 	setting = frappe.get_doc(SETTING_DOCTYPE)
 	frappe.flags.request_id = request_id
@@ -51,7 +50,6 @@ def create_delivery_note(shopify_order, setting, so):
 			)
 			dn.flags.ignore_mandatory = True
 			dn.save()
-			print("&&&&&&&&&&&&&&&&&&&&&&777",dn.name)
 			dn.submit()
 
 			if shopify_order.get("note"):

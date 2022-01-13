@@ -79,7 +79,6 @@ def create_sales_order(shopify_order, setting, company=None):
 			getdate(shopify_order.get("created_at")),
 			taxes_inclusive=shopify_order.get("taxes_included"),
 		)
-		print("##########",items)
 		if not items:
 			message = (
 				"Following items exists in the shopify order but relevant records were"
