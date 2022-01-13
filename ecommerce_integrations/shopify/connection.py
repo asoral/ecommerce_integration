@@ -16,6 +16,8 @@ from ecommerce_integrations.shopify.constants import (
 	WEBHOOK_EVENTS,
 )
 from ecommerce_integrations.shopify.utils import create_shopify_log
+from ecommerce_integrations.shopify.fulfillment import prepare_delivery_note
+
 
 
 def temp_shopify_session(func):
@@ -110,6 +112,8 @@ def process_request(data, event):
 	print("#########################",data)
 	print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",EVENT_MAPPER[event])
 	# enqueue backround job
+	prepare_delivery_note(data,log.name)
+	
 	frappe.enqueue(
 		method=EVENT_MAPPER[event],
 		queue="short",

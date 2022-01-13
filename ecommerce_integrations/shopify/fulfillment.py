@@ -13,19 +13,20 @@ from ecommerce_integrations.shopify.utils import create_shopify_log
 
 
 def prepare_delivery_note(payload, request_id=None):
+	print("***********************************8")
 	frappe.set_user("Administrator")
 	setting = frappe.get_doc(SETTING_DOCTYPE)
 	frappe.flags.request_id = request_id
 
 	order = payload
 
-	# try:
-	sales_order = get_sales_order(cstr(order["id"]))
-	if sales_order:
-		create_delivery_note(order, setting, sales_order)
-		# create_shopify_log(status="Success")
-	# except Exception as e:
-		# create_shopify_log(status="Error", exception=e, rollback=True)
+	try:
+		sales_order = get_sales_order(cstr(order["id"]))
+		if sales_order:
+			create_delivery_note(order, setting, sales_order)
+		create_shopify_log(status="Success")
+	except Exception as e:
+		create_shopify_log(status="Error", exception=e, rollback=True)
 
 
 def create_delivery_note(shopify_order, setting, so):
