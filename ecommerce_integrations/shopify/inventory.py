@@ -15,7 +15,7 @@ from ecommerce_integrations.shopify.constants import MODULE_NAME, SETTING_DOCTYP
 from ecommerce_integrations.shopify.utils import create_shopify_log
 
 
-def update_inventory_on_shopify(a,method) -> None:
+def update_inventory_on_shopify() -> None:
 	"""Upload stock levels from ERPNext to Shopify.
 
 	Called by scheduler on configured interval.
