@@ -22,7 +22,7 @@ def get_inventory_levels(warehouses: Tuple[str], integration: str) -> List[_dict
 			FROM `tabEcommerce Item` ei
 				JOIN tabBin bin
 				ON ei.erpnext_item_code = bin.item_code
-			WHERE bin.warehouse == "Indore E-Commerce RC - CBSPL"
+			WHERE bin.warehouse ="Indore E-Commerce RC - CBSPL"
 		""",
 		as_dict=1,
 	)
