@@ -29,7 +29,7 @@ def get_inventory_levels(warehouses: Tuple[str], integration: str) -> List[_dict
 		values=warehouses + (integration,),
 		as_dict=1,
 	)
-
+	print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77",data)
 	return data
 
 
