@@ -72,7 +72,7 @@ def update_variant(item_code):
                 }
 
                 response = requests.request("POST", url, headers=headers, data=payload)
-                # json.loads(response)
+                
     payload1= ""
    
     headers1 = {
@@ -80,7 +80,7 @@ def update_variant(item_code):
     }
 
     response = requests.request("GET", varurl, headers=headers1, data=payload1)
-    
-    print("$$$$$$$$$$$$$$$$$$$$$$###############",response)
+
+    print("$$$$$$$$$$$$$$$$$$$$$$###############",response.content)
                 
 
