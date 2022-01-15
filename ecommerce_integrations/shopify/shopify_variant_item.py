@@ -73,9 +73,14 @@ def update_variant(item_code):
 
                 response = requests.request("POST", url, headers=headers, data=payload)
                 # json.loads(response)
-                sdoc.test=json.loads(str(response))
-                sdoc.save()
-                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",response)
+    payload1= ""
+   
+    headers1 = {
+        'Content-Type': 'application/json'
+    }
 
+    response = requests.request("GET", varurl, headers=headers1, data=payload1)
+    
+    print("$$$$$$$$$$$$$$$$$$$$$$###############",response)
                 
 
