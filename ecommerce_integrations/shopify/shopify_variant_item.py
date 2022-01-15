@@ -82,8 +82,8 @@ def update_variant(item_code):
     response = requests.request("GET", varurl, headers=headers1, data=payload1)
     print("$$$$$$$$$$$$$$$$$$$$$$###############",json.loads(response.content))
     varlst=json.loads(response.content)
-    for i in varlst:
-        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^666666",i[0])
+    for i in varlst["variants"]:
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^666666",i)
         # doc=frappe.new_doc("Ecommerce Item")
 
     
