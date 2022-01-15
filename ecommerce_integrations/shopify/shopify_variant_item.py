@@ -72,7 +72,8 @@ def update_variant(item_code):
                 }
 
                 response = requests.request("POST", url, headers=headers, data=payload)
-                sdoc.test=str(response)
+                # json.loads(response)
+                sdoc.test=json.loads(response)
                 sdoc.save()
                 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",response)
 
