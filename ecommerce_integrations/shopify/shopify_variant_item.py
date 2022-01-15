@@ -34,6 +34,9 @@ def update_variant(item_code):
     url1="https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+".json"
 
     url = "https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
+
+    varurl="https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
+
     # url="https://{{api_key}}:{{api_password}}@{{store_name}}.myshopify.com/admin/api/{{api_version}}/variants/{{variant_id}}.json"
     payload1= json.dumps({ 
         
@@ -69,6 +72,7 @@ def update_variant(item_code):
                 }
 
                 response = requests.request("POST", url, headers=headers, data=payload)
+                print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",response)
 
                 
 
