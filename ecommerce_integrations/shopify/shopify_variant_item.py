@@ -91,7 +91,7 @@ def update_variant(item_code):
         doc.integration_item_code=i.get("product_id")
         doc.variant_id=i.get("id")
         doc.variant_of=item_code
-        doc.save(ignore_permission=True)
+        doc.save(ignore_permissions=True)
 
 
     
