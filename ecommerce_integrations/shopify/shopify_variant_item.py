@@ -82,16 +82,18 @@ def update_variant(item_code):
     response = requests.request("GET", varurl, headers=headers1, data=payload1)
     print("$$$$$$$$$$$$$$$$$$$$$$###############",json.loads(response.content))
     varlst=json.loads(response.content)
+    # lst=[]
+    EcItem=frappe.db.sql("select erpnext_item_code from `tabEcommerce Item`",as_list=1)
     for i in varlst["variants"]:
-        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^666666",i)
-        doc=frappe.new_doc("Ecommerce Item")
-        doc.integration="shopify"
-        doc.erpnext_item_code=i.get("sku")
-        doc.sku=i.get("sku")
-        doc.integration_item_code=i.get("product_id")
-        doc.variant_id=i.get("id")
-        doc.variant_of=item_code
-        doc.save(ignore_permissions=True)
+        if i.get("sku") not in EcItem:
+            doc=frappe.new_doc("Ecommerce Item")
+            doc.integration="shopify"
+            doc.erpnext_item_code=i.get("sku")
+            doc.sku=i.get("sku")
+            doc.integration_item_code=i.get("product_id")
+            doc.variant_id=i.get("id")
+            doc.variant_of=item_code
+            doc.save(ignore_permissions=True)
 
 
     
