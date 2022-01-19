@@ -49,7 +49,7 @@ def create_delivery_note(shopify_order, setting, so):
 				dn.items, fulfillment.get("line_items"), fulfillment.get("location_id")
 			)
 			dn.flags.ignore_mandatory = True
-			dn.save()
+			dn.insert(ignore_permissions = True)
 			dn.submit()
 
 			if shopify_order.get("note"):

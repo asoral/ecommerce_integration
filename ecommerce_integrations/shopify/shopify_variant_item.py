@@ -94,6 +94,9 @@ def update_variant(item_code):
             doc.variant_id=i.get("id")
             doc.variant_of=item_code
             doc.save(ignore_permissions=True)
+        doc=frappe.get_doc("Ecommerce Item",item_code)
+        doc.has_variants=1
+        doc.save(ignore_permissions=True)
 
 
     
