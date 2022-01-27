@@ -64,7 +64,9 @@ def update_variant(item_code):
                 payload = json.dumps({
                 "variant": {
                     "option1":i.attribute_value,
-                    "sku":sdoc.name
+                    "sku":sdoc.name,
+                    "weight": sdoc.weight_per_unit,
+                    "weight_unit": "kg",
                 }
                 })
                 headers = {
@@ -84,6 +86,11 @@ def update_variant(item_code):
     varlst=json.loads(response.content)
     # lst=[]
     EcItem=frappe.db.sql("select erpnext_item_code from `tabEcommerce Item`",as_list=1)
+    doc=frappe.get_doc("Ecommerce Item",item_code)
+    if doc.has_variants==1:
+        doc.has_variants=1
+        doc.save(ignore_permissions=True)
+
     for i in varlst["variants"]:
         if i.get("sku") not in EcItem:
             doc=frappe.new_doc("Ecommerce Item")
@@ -94,10 +101,6 @@ def update_variant(item_code):
             doc.variant_id=i.get("id")
             doc.variant_of=item_code
             doc.save(ignore_permissions=True)
-        doc=frappe.get_doc("Ecommerce Item",item_code)
-        doc.has_variants=1
-        doc.save(ignore_permissions=True)
-
 
     
     
