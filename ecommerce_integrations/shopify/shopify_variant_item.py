@@ -89,7 +89,7 @@ def update_variant(item_code):
     doc=frappe.get_doc("Ecommerce Item",{"erpnext_item_code":item_code})
     if doc.has_variants==1:
         doc.has_variants=1
-        doc.save(ignore_permissions=True)
+        doc.insert(ignore_permissions=True)
 
     for i in varlst["variants"]:
         if i.get("sku") not in EcItem:
