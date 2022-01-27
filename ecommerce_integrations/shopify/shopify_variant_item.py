@@ -86,7 +86,7 @@ def update_variant(item_code):
     varlst=json.loads(response.content)
     # lst=[]
     EcItem=frappe.db.sql("select erpnext_item_code from `tabEcommerce Item`",as_list=1)
-    doc=frappe.get_doc("Ecommerce Item",item_code)
+    doc=frappe.get_doc("Ecommerce Item",{"erpnext_item_code":item_code})
     if doc.has_variants==1:
         doc.has_variants=1
         doc.save(ignore_permissions=True)
