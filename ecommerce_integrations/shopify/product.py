@@ -377,7 +377,8 @@ def upload_erpnext_item(doc, method=None):
 						"integration_item_code": str(product.id),
 						"variant_id": str(product.variants[0].id),
 						"sku": str(product.variants[0].sku),
-						"selected_variant":1
+						"selected_variant":1,
+						"has_variants": 1,
 					}
 				)
 				ecom_item.insert()
