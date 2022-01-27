@@ -32,6 +32,7 @@ def update_variant(item_code):
     password = docSettings.get_password('password')
 
     url1="https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+".json"
+    
 
     url = "https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/products/"+product_id+"/variants.json"
 
@@ -66,7 +67,7 @@ def update_variant(item_code):
                     "option1":i.attribute_value,
                     "sku":sdoc.name,
                     "weight": sdoc.weight_per_unit,
-                    "weight_unit": "kg",
+                    "weight_unit": "kg"
                 }
                 })
                 headers = {
@@ -82,26 +83,49 @@ def update_variant(item_code):
     }
 
     response = requests.request("GET", varurl, headers=headers1, data=payload1)
-    print("$$$$$$$$$$$$$$$$$$$$$$###############",json.loads(response.content))
+    # print("$$$$$$$$$$$$$$$$$$$$$$###############",json.loads(response.content))
     varlst=json.loads(response.content)
     # lst=[]
-    EcItem=frappe.db.sql("select erpnext_item_code from `tabEcommerce Item`",as_list=1)
+    EcItem=frappe.db.sql("select erpnext_item_code from `tabEcommerce Item`",as_dict=1)
     doc=frappe.get_doc("Ecommerce Item",{"erpnext_item_code":item_code})
     # if doc.has_variants==1:
     #     doc.has_variants=1
     #     doc.insert(ignore_permissions=True)
-
+    eitem=[]
+    for j in EcItem:
+        eitem.append(j.erpnext_item_code)
     for i in varlst["variants"]:
-        if i.get("sku") not in EcItem:
-            doc=frappe.new_doc("Ecommerce Item")
-            doc.integration="shopify"
-            doc.erpnext_item_code=i.get("sku")
-            doc.sku=i.get("sku")
-            doc.integration_item_code=i.get("product_id")
-            doc.variant_id=i.get("id")
-            doc.variant_of=item_code
-            doc.save(ignore_permissions=True)
+        if i.get("title") != "Default Title":
+            if i.get("sku") not in eitem:
+                doc=frappe.new_doc("Ecommerce Item")
+                doc.integration="shopify"
+                doc.erpnext_item_code=i.get("sku")
+                doc.sku=i.get("sku")
+                doc.integration_item_code=i.get("product_id")
+                doc.variant_id=i.get("id")
+                doc.variant_of=item_code
+                doc.save(ignore_permissions=True)
 
-    
-    
+            var_id=str(i.get("id"))
+            varianturl="https://"+key+":"+password+"@"+shopify_url+"/admin/api/2021-10/variants/"+var_id+".json"
+            print(varianturl)
+            doc=frappe.db.get_all("Item",{"variant_of":item_code},["name"])
+            for i in doc:
+                sdoc=frappe.get_doc("Item",i.name)
+                for i in sdoc.attributes:
+                    if i.attribute=="Size":
+                        payload = json.dumps({
+                            "variant": {
+                            "weight": sdoc.weight_per_unit,
+                            "weight_unit": "kg"
+                            }
+                        })
+                        headers = {
+                        'Content-Type': 'application/json'
+                        }
+                        response1 = requests.request("PUT", varianturl, headers=headers, data=payload)
+                        print("&&&&&&&&&&&&&&&&&&&&&",response1)
+
+
+
 
