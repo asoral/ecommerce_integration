@@ -115,6 +115,22 @@ def process_request(data, event):
 		is_async=True,
 		**{"payload": data, "request_id": log.name},
 	)
+	frappe.enqueue(
+		method=EVENT_MAPPER[event],
+		queue="short",
+		timeout=300,
+		is_async=True,
+		**{"payload": data, "request_id": log.name},
+	)
+	frappe.enqueue(
+		method=EVENT_MAPPER[event],
+		queue="short",
+		timeout=300,
+		is_async=True,
+		**{"payload": data, "request_id": log.name},
+	)
+	
+
 
 
 def _validate_request(req, hmac_header):
